@@ -1,0 +1,89 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php
+
+Options All -Indexes
+
+#
+# set output charset
+#
+#<IfModule mod_charset.c>
+#    CharsetRecodeMultipartForms Off
+#    CharsetSourceEnc utf-8
+#</IfModule>
+
+<IfModule mod_php4.c>
+	php_flag display_errors on
+	php_flag register_globals on
+	php_flag magic_quotes_gpc on
+	php_flag zlib.output_compression on
+	php_value output_buffering 0
+	php_value allow_call_time_pass_reference on
+</IfModule>
+
+ErrorDocument 404 /index.php?action=404&data=404/
+ 
+############
+# SECURITY #
+###########################################################
+
+<Files "*.ini">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</Files>
+
+<Files "*.sql">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</Files>
+
+#####################
+# SMART URLs PARSER #
+###########################################################
+
+Options +FollowSymLinks
+RewriteEngine on
+
+## skip root page
+RewriteRule ^skip/([0-9]{1,15})/?$ index.php?skip=$1&data=______rootpage/skip/$1/ [NC,L]
+
+## search
+RewriteRule ^search/?$ index.php?action=search&data=search/ [QSA,L]
+
+## add entry
+RewriteRule ^add/?$ index.php?action=add&data=add/ [NC,L]
+
+## rss
+RewriteRule ^rss/?$ rss/entry.xml [NC,L]
+
+## exceptions
+RewriteRule ^login/?$ index.php?action=login&data=login/ [NC,L]
+RewriteRule ^logout/?$ index.php?action=logout&data=logout/ [NC,L]
+RewriteRule ^clearcache/?$ index.php?action=clearc&data=clearcache/ [NC,L]
+
+## dates 
+RewriteRule ^([0-9]{4,4})/?$ index.php?year=$1&action=date&part=year&data=$1/ [NC,L]
+RewriteRule ^([0-9]{4,4})/([0-9]{2,2})/?$ index.php?year=$1&month=$2&action=date&part=month&data=$1/$2/ [NC,L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/?$ index.php?year=$1&month=$2&day=$3&action=date&part=day&data=$1/$2/$3/ [NC,L]
+
+## separate entries with urlcache
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/?$ index.php?year=$1&month=$2&day=$3&action=entry&part=day&data=$1/$2/$3/$4/&getid=true&urlcache=$4 [NC,L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/edit/?$ index.php?year=$1&month=$2&day=$3&action=edit&data=$1/$2/$3/$4/edit/&getid=true&urlcache=$4&table=update [NC,L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/delete/?$ index.php?year=$1&month=$2&day=$3&action=delete&data=$1/$2/$3/$4/delete/&getid=true&urlcache=$4 [NC,L]
+
+## keywords
+RewriteRule ^keyword/([-a-zA-Z0-9_]+)?/?$ index.php?keyword=$1&action=keyword&data=keyword/$1/ [NC,L]
+RewriteRule ^keyword2/([-a-zA-Z0-9_]+)?/?$ index.php?keyword2=$1&action=keyword2&data=keyword2/$1/ [NC,L]
+
+
+## files
+#RewriteRule ^entry/([0-9]{1,15})/file/(.*)\.([-a-zA-Z0-9_]{1,4})$ files/$1/$2.$3 [NC,L]
+
+## sections
+#RewriteRule ^([-a-zA-Z0-9_]+)/?$ index.php?data=$1&section=$1&action=section [NC,L]
+RewriteRule ^([-a-zA-Z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&section=$1&action=section&skip=$2 [NC,L]
+
+## authors
+RewriteRule ^author/([-a-zA-Z0-9_]+)/?$ index.php?data=$1&author=$1&action=author [NC,L]
+RewriteRule ^author/([-a-zA-Z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&author=$1&action=author&skip=$2 [NC,L]

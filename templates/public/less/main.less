@@ -1,0 +1,201 @@
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot?8154785');
+  src: url('../font/fontello.eot?8154785#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff?8154785') format('woff'),
+       url('../font/fontello.ttf?8154785') format('truetype'),
+       url('../font/fontello.svg?8154785#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+// меню админа
+.admin-menu {
+    font-family: 'fontello';
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+    & li a {
+        display: block;
+        height: 3em;
+        width: 3em;
+        line-height: 3em;
+        color: #999;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        .transition(background 0.1s ease-in-out);
+        text-decoration: none;
+    }
+ 
+    & li a:hover,
+    & li:first-child a {
+        background: #47a3da;
+        color: white;
+    }
+    & .edit {
+        background-color: darken(#f7f7f7, 10%);
+    }
+    & .exit:after {
+        content: '\e071';
+    }
+    & .edit:after {
+        content: '\e068';
+    }
+    & .clearcache:after {
+        content: '\e04f';
+    }
+    & .add:after {
+        content: '\e0c1';
+    }
+    & .media:after {
+        content: '\e0a9';
+    }
+}
+
+a[class^="share-"] {
+    font: 1em/2 'fontello';
+    color: #ccc;
+    text-decoration: none;
+    .pull-right;
+    margin-left: 5px;
+    &:hover {
+        color: #47a3da;
+    }
+}
+.share-vkontakte:after {
+    content: '\f30a';
+}
+.share-facebook:after {
+    content: '\f301';
+}
+.share-twitter:after {
+    content: '\f303';
+}
+.share-odnoklassniki:after {
+    content: '\f30d';
+}
+.share-email:after {
+    content: '\2709';
+}
+
+#scrollUp {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 10%;
+    font-size: 30px;
+    color: #999;
+    text-align: center;
+    text-decoration: none;
+    line-height: 200%;
+    .transition(background .3s);
+    &:after {
+        content: '\2B06';
+    }
+    &:hover {
+        background-color: #f7f7f7;
+        opacity: .8;
+    }
+}
+
+@media (max-width: 768px) { 
+    .admin-menu {
+        position: static;
+        & li {
+            float: left;
+            width: 20%;
+        }
+        & li a {
+            width: 100%;
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+    }
+}
+
+
+/* Поле ввода строки поиска */
+input[type=search] {
+  background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAATCAYAAACdkl3yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAvRJREFUeNqUVE9Ik2EYf/fv29z//4vPqWnbUKcijaWHYCIEXrzEQA8SeZkE6+AONoKEGIG3Ljukp1FUt7ROghR4CTILjRoeuuRSdIaubbi26dbvGU6+dAN74eH7tvd5f8/v/f2e5xOVy2VWXTabjQmXSCRiEonEI5PJbkul0mv47SiVSmtHR0crxWIxenx8vHWaWw8IAJxcLp/WaDRhlUolMRgMGURhd3dXk8lkuGw2m0bcyefzLwhDymosgDCtVvtEp9ONd3R07IfD4Y/t7e0/sJVC8EtLS5ej0ejVRCLx/ODggMvlcjFGaNWwWq0VVq2trYN9fX3liYmJZKFQmMEe73K5mMPhYACk3F6APBseHs57vd5sc3OzUXyWDbRgTU1N98CoHAwGX0Kf+3a7fTuVSrF0Os3AgOHgGv67Ozo6+kGtVqtQ/NY5IBxkYrH4OsD2u7q6HjU2NpYg7Ok+MYcurKWlJTUwMBDhOK6Em9ysCQR3lNDpl9PpTMKhWjIyXJnxPL+M/GJDQwN/Dogsh8i5vb09Daxm9RbtQS81hObg5h9xrQSI/ROa8GDVTcD1nAXAONV2u93r54DoKkNDQ69AuazX659CfHUt1tCmE8+HxN7v98fEZxMQgUgkcsPj8STQiL2oGkdj+mGA+oTJJYVCETIajZ+wrwwEAm9hyPI/nd3W1hbAwVlUYWCT9vl8W4uLi1egFzUdw0j8BkMdLCfX0qFQaAX9NgmHv0qFICaTadZisTBUpCtqNzY2Ps/NzX2bn5/vjMfj5sPDQwmYbPf09CRHRkbeg9FjAH6n9qgwqoJQZ1M1uiIq59CQM/39/VHUGUS4EUrEPmId8Q5MCgRCGCIgdpvN5i80GgQCLYhRbmpq6jXmbBJdvHPyFajskatkCAEI20OysLBg2tzcHEOigpKFIKi4Q41XPUjv9IRWTKhtBSgWi2UhGL+6uuqkNgLIGyHIRVfVNS2qTmOGdBDwwf+CnP2wUU9JMdUF4ZBedP0VYACy1Fw50QDW/AAAAABJRU5ErkJggg==) no-repeat 9px center;
+  padding: 5px 10px 5px 32px;
+  .border-radius(0px);  
+}
+
+
+#article-body, #article-lead {
+    line-height: 140%;
+}
+
+
+/* lightbox css */
+
+.lightbox-css {
+    position: relative;
+    cursor: pointer;
+    & .full-review {
+        position: absolute;
+        overflow: visible;
+        display: none;
+        z-index: 3;
+        & img {
+            max-width: none;
+            border: 5px solid #fff;
+            .box-shadow(0 0 10px #ccc);
+        }
+        &:hover .caption {
+            display: block;
+        }
+        & .caption {
+            position: absolute;
+            display: none;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            color: #fff;
+            font-size: 13px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, .7);
+            .box-sizing(border-box);
+        }
+    }
+    & .caption {
+        font-size: 13px;
+        line-height: 110%;
+    }
+}
+
+/* Выдвижное меню */
+.nav ul {
+    display: none;
+    position: absolute;
+    width: 200px;
+    background-color: #555;
+    list-style: none;
+    margin: 0;
+    & a {
+        display: block;
+        color: #fff;
+        width: 100%;
+        padding: 5px 15px;
+        .box-sizing(border-box);
+    }
+    & a:hover {
+        background-color: #900;//lighten(#555, 10%);
+        text-decoration: none;
+    }
+    & li {
+        padding: 0 0 0 0;
+        border-bottom: 1px solid rgba(256, 256, 256, .1);
+    }
+}
+.nav > li:hover ul {
+    display: block;
+}
+
+

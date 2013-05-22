@@ -1,0 +1,30 @@
+#header h1 a, #header h1 a:hover {
+	color: #900;
+	font-weight: 300;
+  letter-spacing: -2px;
+	font-size: 1.1em;
+  font-family: 'Open Sans', 'Roboto Slab';
+	text-decoration: none;
+  /*text-shadow: 1px 1px 3px rgba(0, 0, 0, .3);*/
+}
+
+
+.container-fluid {
+	max-width: 992px;
+	margin: 0 auto;
+
+}
+
+@media (max-width: 768px) { 
+	body {
+		padding: 0;
+	}
+  #scrollUp {
+    display: none !important;
+  }
+}
+
+
+
+
+
