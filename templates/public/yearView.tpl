@@ -5,9 +5,13 @@
 {{ /foreach }}
 </ul>
 <div class="row-fluid">
-{{ foreach from=$months item=myMonth }}
+{{ foreach from=$months item=myMonth name=month }}
     <div class="span3">
         {{ calendar year=$thisYear month=$myMonth ignoreNav=true }}
     </div>
+    {{ if ($smarty.foreach.month.iteration == 4 || $smarty.foreach.month.iteration == 8) && !$smarty.foreach.month.last }}
+</div>
+<div class="row-fluid">
+    {{ /if }}
 {{ /foreach }}
 </div>

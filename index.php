@@ -6,6 +6,61 @@
  *
  */
 
+
+/*
+if ($_GET) {
+    print_r($_GET);
+    exit;
+};
+
+if ($_GET['frob']) {
+    $args = array('frob' => $_GET['frob']);
+    $args = array_merge(array("method" => "flickr.auth.getToken", "format" => "rest", "api_key" => "f0d49fb31f9dd2b7e9baa3d6d258dddf"), $args);
+    ksort($args);
+    $auth_sig = '';
+    foreach ($args as $key => $data) {
+        $auth_sig .= $key . $data;
+    }
+    $api_sig = md5('a679f9c4ff805e4d' . $auth_sig);
+    $args['api_sig'] = $api_sig;
+
+echo "http://api.flickr.com/services/rest/?method=flickr.auth.getToken&api_key=f0d49fb31f9dd2b7e9baa3d6d258dddf&format=rest&api_sig=$api_sig&frob=".$_GET['frob'];
+
+//    print_r($args);
+    exit;
+}
+
+
+//secret (api_key 12345 perms write) по алфавиту
+$api_sig = md5('a679f9c4ff805e4dapi_keyf0d49fb31f9dd2b7e9baa3d6d258dddfpermswrite');
+
+echo "http://flickr.com/services/auth/?api_key=f0d49fb31f9dd2b7e9baa3d6d258dddf&perms=write&api_sig=$api_sig";
+exit;
+
+
+// session_start();
+require_once('lib/phpFlickr/phpFlickr.php');
+$flickr = new phpFlickr('f0d49fb31f9dd2b7e9baa3d6d258dddf', 'a679f9c4ff805e4d');
+$result = $flickr->sync_upload('Eagle.jpg', 'title2', 'desc', 'php, css');
+print_r($result);
+exit;
+
+// Authenticate;  need the "IF" statement or an infinite redirect will occur
+if(empty($_GET['frob'])) {
+    
+    $flickr->auth('write'); // redirects if none; write access to upload a photo
+
+}
+else {
+    // Get the FROB token, refresh the page;  without a refresh, there will be "Invalid FROB" error
+    $flickr->auth_getToken($_GET['frob']);
+    header('Location: /photo.html');
+    exit();
+}
+exit;
+
+*/
+
 require_once('configs/settings.php');
 require_once('lib/smarty/Smarty.class.php');
 require_once('lib/mySmarty.class.php');
@@ -31,7 +86,7 @@ if (isset($_COOKIE['adminExpire'])) {
 /**
  * $_GET['data'] назначается в .htaccess, необходим для путей к кэшируемым файлам
  */
-if ($_GET['data']) {
+if (array_key_exists('data', $_GET)) {
     $_GET['data'] = strtolower(preg_replace( '/\/+/', '/', $_GET['data'])); // Убираем двойные слэши
     $cacheID  = implode('|', array_diff(explode('/', $_GET['data']), array(''))); // Удаляем пустые элементы
 }
@@ -40,7 +95,7 @@ if (empty($cacheID)) {
     $cacheID = '______rootpage';
 }
 
-$tpl = 'index.tpl'; // Основной шаблон
+$tpl = 'index.tpl'; // Основной шаблон, иные шаблоны не кэшируем
 
 if ($smarty->is_cached($tpl, $cacheID)) {
     $smarty->assign('CACHE', true);
@@ -69,7 +124,7 @@ if ($smarty->is_cached($tpl, $cacheID)) {
         $db->query("SET NAMES UTF8");
     }
 
-    if ($_GET['urlcache']) { // urlcache - название страницы в адресной строке
+    if (array_key_exists('urlcache', $_GET)) { // urlcache - название страницы в адресной строке
         define('YEAR',     $_GET['year']);
         define('MONTH',    $_GET['month']);
         define('DAY',      $_GET['day']);
@@ -78,9 +133,6 @@ if ($smarty->is_cached($tpl, $cacheID)) {
         $dayStartTimeStamp = mktime(0, 0, 0, MONTH, DAY, YEAR);
         $dayEndTimeStamp = mktime(23, 59, 59, MONTH, DAY, YEAR);
 
-        /**
-         * :TODO: Добавить префикс в названии таблицы
-         */
         if (!$_GET['id'] = $db->getOne("SELECT entryid FROM ".PREFIX."entry WHERE intime >= '$dayStartTimeStamp' AND intime <= '$dayEndTimeStamp' AND urlcache = '".URLCACHE."'")) {
                $_GET['action'] = '404';
         }
@@ -143,7 +195,11 @@ if ($smarty->is_cached($tpl, $cacheID)) {
 
         case 'author':
         {
-            include('actions/author.php');
+            if (!empty($_GET['author'])) {
+                include('actions/author.php');
+            } else {
+                include('actions/authors.php');
+            }
             break;
         }
 
@@ -187,6 +243,21 @@ if ($smarty->is_cached($tpl, $cacheID)) {
             $tpl = 'add.tpl';
             include('actions/add.php');
             break;
+        }
+
+        case 'photo':
+        {
+            $smarty->caching = false;
+            $tpl = 'photo.tpl';
+            include('actions/photo.php');
+            break;
+        }
+
+        case 'thumb':
+        {
+            $smarty->caching = false;
+            include('actions/thumb.php');
+            exit;
         }
 
         case 'search':

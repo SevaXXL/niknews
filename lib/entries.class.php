@@ -7,9 +7,10 @@ class inTerraEntry
     var $timeStart;         // @access private
     var $timeEnd;           // @access private
     var $section;           // @access private
-    var $author;            // @access private
+    var $limit = PER_PAGE;  // @access private
     var $order = 'DESC';    // @access private
     var $entryID;           // @access private
+    var $entriesID;         // @access private
     var $root = false;      // @access private
 
 
@@ -33,41 +34,27 @@ class inTerraEntry
     {
         //initial sql string
         $sql = "SELECT
-            entryid AS id,
-            security,
-            subject,
-            subject2,
-            content_p AS content,
-            history_p AS history,
+            ".PREFIX."entry.entryid AS id,
+            title,
+            subtitle,
+            lead,
+            content,
+            image,
             intime,
             comments,
             commentcount,
-            image,
-            ljurl,
-            urlcache AS url,
+            video,
+            urlcache,
+            rubrikacache AS rubrika,
+            authorcache AS authors,
             keywordcache AS keywords,
-            keyword2cache AS keywords2,
-            bim_entry.cat_type AS cat_types,
-            bim_entry.gal_type AS gal_types,
-            bim_entry.catid,
-            bim_entry.catid AS catd,
-            bim_entry.som AS som,
-            bim_category.name AS catName,
-            bim_category.fullName AS catFullName,
-            bim_authors.name as authorName,
-            bim_authors.fullName as authorFullName,
-            ordr,
-            descr,
-            razdel,
-            som,
-            nomer,
-            page,
-            bim_entry.news_read as view,
-            is_bottom,
-            price
-            FROM bim_entry
-            LEFT JOIN bim_category ON (bim_entry.catid = bim_category.catid)
-            LEFT JOIN bim_authors ON (bim_authors.authorid = bim_entry.authorid)
+            ".PREFIX."entry.catid,
+            ".PREFIX."category.unixword,
+            ".PREFIX."category.word,
+            ".PREFIX."image.ext
+            FROM ".PREFIX."entry
+            LEFT JOIN ".PREFIX."category ON (".PREFIX."entry.catid = ".PREFIX."category.wordid)
+            LEFT JOIN ".PREFIX."image ON (".PREFIX."entry.image = ".PREFIX."image.imgid)
         ";
 
         //check if there is a sectional dellimiter
@@ -75,29 +62,30 @@ class inTerraEntry
 
         //check if we need a separate entry
         if (isset($this->entryID)) {
-            $sql .= " WHERE entryid = '".$this->getEntryID()."'";
+            $sql .= " WHERE ".PREFIX."entry.entryid = '".$this->getEntryID()."'";
         } else {
+            //check if there is a entries delimiter
+            if (isset($this->entriesID)) {
+                $delim[] = PREFIX."entry.entryid IN (".implode(",", $this->getEntriesID()).")";
+            }
             //check if there is a section delimiter
             if (isset($this->section)) {
-                $delim[] = "bim_entry.catid = '".$this->getSection()."'";
-            }
-            if(isset($this->author)) {
-                $delim[] = "bim_entry.authorid = '".$this->getAuthor()."'";
+                $delim[] = PREFIX."entry.catid = '".$this->getSection()."'";
             }
             //check if there is a timeframe
             if(!empty($this->timeStart) and !empty($this->timeEnd)) {
-                $delim[] = "bim_entry.intime > '".$this->getTimeStart()."' AND bim_entry.intime < '".$this->getTimeEnd()."'";
+                $delim[] = PREFIX."entry.intime > '".$this->getTimeStart()."' AND ".PREFIX."entry.intime < '".$this->getTimeEnd()."'";
             }
             //check if this is the root page
             if($this->getRoot()) {
-                $delim[] = "bim_entry.format = '1'";
+                $delim[] = PREFIX."entry.format = '1'";
             }
             //create dellimmiting query
             if(!empty($delim)) {
                 $sql .= " WHERE ".implode(" AND ", $delim);
             }
             //set sort order
-            $sql .= " ORDER BY bim_entry.entryid DESC, bim_entry.intime ".$this->getOrder()." LIMIT ".(int)$_GET['skip'].", ".PER_PAGE;
+            $sql .= " ORDER BY ".PREFIX."entry.intime ".$this->getOrder()." LIMIT ".(int)$_GET['skip'].", ".$this->getLimit();
         }
         return $sql;
     }
@@ -109,21 +97,32 @@ class inTerraEntry
     ***/
     function getEntries()
     {
+
         $entries = $this->db->getAll($this->getSQL());
 
         //check if keywords are allowed and process them into an array
         foreach ($entries as $key => $entry)
         {
+
+            // Authors
+            if (!empty($entry['authors'])) {
+                $myWords = explode(',', $entry['authors']);
+                foreach ($myWords as $mkey => $keyword)
+                {
+                    $temp = explode('|', $keyword);
+                    $myWords[$mkey] = array('word' => $temp[0], 'link' => $temp[1]);
+                }
+                $entries[$key]['authors'] = $myWords;
+            } else {
+                $entries[$key]['authors'] = array();
+            }
+
             //keywords
             if (!empty($entry['keywords'])) {
                 $myWords = explode(',', $entry['keywords']);
                 foreach ($myWords as $mkey => $keyword)
                 {
                     $temp = explode('|', $keyword);
-                    //upgrade bogus check
-                    if (empty($temp[1])) {
-                        $temp[1] = urlencode($temp[0]);
-                    }
                     $myWords[$mkey] = array('word' => $temp[0], 'link' => $temp[1]);
                 }
                 $entries[$key]['keywords'] = $myWords;
@@ -131,33 +130,42 @@ class inTerraEntry
                 $entries[$key]['keywords'] = array();
             }
 
-            //keywords2
-            if (!empty($entry['keywords2'])) {
-                $myWords = explode(',', $entry['keywords2']);
+            //rubrika
+            if (!empty($entry['rubrika'])) {
+                $myWords = explode(',', $entry['rubrika']);
+                $link = '';
                 foreach ($myWords as $mkey => $keyword)
                 {
                     $temp = explode('|', $keyword);
-                    //upgrade bogus check
-                    if (empty($temp[1])) {
-                        $temp[1] = urlencode($temp[0]);
-                    }
-                    $myWords[$mkey] = array('word' => $temp[0], 'link' => $temp[1]);
+                    $link .= $temp[1];
+                    $myWords[$mkey] = array('word' => $temp[0], 'link' => '/'.$link.'/');
+                    $link .= '_';
                 }
-                $entries[$key]['keywords2'] = $myWords;
+                $entries[$key]['rubrika'] = $myWords;
             } else {
-                $entries[$key]['keywords2'] = array();
+                $entries[$key]['rubrika'] = array();
             }
 
+            // Thumbnail
+            // global function getPartToFiles()
+           if ($entry['image']) {
+                $entries[$key]['imagepart'] = getPartToFiles($entry['image']);
+           }
+
+            // video: XXXXXXXXXXX#true
+            if (!empty($entry['video'])) {
+                $video = explode('#', $entry['video']);
+                $entries[$key]['video'] = $video[0];
+                $entries[$key]['videofull'] = $video[1];
+            }
+
+/*
             //cat_types
             if (!empty($entry['cat_types'])) {
                 $myWords = explode(',', $entry['cat_types']);
                 foreach ($myWords as $mkey => $cat_type)
                 {
                     $temp = explode('|', $cat_type);
-                    //upgrade bogus check
-                    if (empty($temp[1])) {
-                        $temp[1] = urlencode($temp[0]);
-                    }
                     $myWords[$mkey] = array('word' => $temp[0], 'link' => $temp[1]);
                 }
                 $entries[$key]['cat_types'] = $myWords;
@@ -165,40 +173,23 @@ class inTerraEntry
                 $entries[$key]['cat_types'] = array();
             }
 
-            //gal_types
-            if (!empty($entry['gal_types'])) {
-                $myWords = explode(',', $entry['gal_types']);
-                foreach ($myWords as $mkey => $gal_type)
-                {
-                    $temp = explode("|",$gal_type);
-                    //upgrade bogus check
-                    if (empty($temp[1])) {
-                        $temp[1] = urlencode($temp[0]);
-                    }
-                    $myWords[$mkey] = array('word' => $temp[0], 'link' => $temp[1]);
-                }
-                $entries[$key]['gal_types'] = $myWords;
-            } else {
-                $entries[$key]['gal_types'] = array();
-            }
-
+*/
             //categorial settings
             if (!empty($entry['catid'])) {
                 $entries[$key]['section'] = array();
                 $entries[$key]['section']['id'] = $entry['catid'];
-                $entries[$key]['section']['name'] = $entry['catName'];
-                $entries[$key]['section']['fullName'] = $entry['catFullName'];
+                $entries[$key]['section']['unixword'] = $entry['unixword'];
+                $entries[$key]['section']['name'] = $entry['word'];
             } else {
                 $entries[$key]['section'] = array();
             }
 
-            $entries[$key]['url'] = date('/Y/m/d/', $entry['intime']).$entry['url'].'/';
-            $entries[$key]['datetime'] = date('H:i d.m.y', $entry['intime']);
-
             //unset double data
-            unset($entries[$key]['catid']);
-            unset($entries[$key]['catName']);
-            unset($entries[$key]['catFullName']);
+            unset($entries[$key]['catid'], $entries[$key]['unixword'], $entries[$key]['word']);
+
+
+            $entries[$key]['url'] = date('/Y/m/d/', $entry['intime']).$entry['urlcache'].'/';
+
         }
         return $entries;
     }
@@ -266,20 +257,6 @@ class inTerraEntry
         return $this->section;
     }
 
-    function setAuthor($section)
-    {
-        $this->author = (int)$section;
-    }
-
-    /***
-     inTerraEntry::getSection() -- return currently selected section
-
-     @return int
-    ***/
-    function getAuthor()
-    {
-        return $this->author;
-    }
     /***
      inTerraEntry::setTimeStart()
 
@@ -326,7 +303,7 @@ class inTerraEntry
      @param start int
      @param end int
     ***/
-    function setTimes($start,$end)
+    function setTimes($start, $end)
     {
         $this->setTimeStart($start);
         $this->setTimeEnd($end);
@@ -353,6 +330,31 @@ class inTerraEntry
     }
 
     /***
+     inTerraEntry::setEntryID() -- sets the desired entry id
+
+     @param id array(int)
+    ***/
+    function setEntriesID($id)
+    {
+        $this->entriesID = array();
+        if (is_array($id)) {
+            foreach ($id as $value) {
+                $this->entriesID[] = (int)$value;
+            }
+        }
+    }
+
+    /***
+     inTerraEntry::getEntriesID() -- return the preset entries id
+
+     @return array(int)
+    ***/
+    function getEntriesID()
+    {
+        return $this->entriesID;
+    }
+
+    /***
      inTerraEntry::setRoot() -- sets the notion of this being the root page
 
      @return int
@@ -371,6 +373,28 @@ class inTerraEntry
     {
         return $this->root;
     }
+
+    /***
+     inTerraEntry::setLimit()
+
+     @return int
+    ***/
+    function setLimit($limit)
+    {
+        $this->limit = (int)$limit;
+    }
+
+    /***
+     inTerraEntry::getLimit()
+
+     @return int
+    ***/
+    function getLimit()
+    {
+        return $this->limit;
+    }
+
+
 }
 
 ?>

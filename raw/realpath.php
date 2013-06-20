@@ -1,0 +1,7 @@
+<?
+
+echo realpath("../index.php");
+
+
+
+?>

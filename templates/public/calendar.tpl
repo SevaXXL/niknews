@@ -6,7 +6,7 @@
     {{ if $calendar.showNav }}
                     <a href="/{{ $calendar.prevMonth }}">&laquo;</a>
     {{ /if }}
-                    <a href="/{{ $calendar.thisMonth }}">{{ $calendar.timeStamp|date_format:'%b. %Y' }}</a>
+                    <a href="/{{ $calendar.thisMonth }}">{{ $calendar.timeStamp|date_format:'%B %Y' }}</a>
     {{ if $calendar.showNav }}
                     <a href="/{{ $calendar.nextMonth }}">&raquo;</a>
     {{ /if }}
@@ -14,30 +14,30 @@
             </th>
         </tr>
     </thead>
-    <tr class="info">
-        <td width="14%">Пн</td>
-        <td width="14%">Вт</td>
-        <td width="14%">Ср</td>
-        <td width="14%">Чт</td>
-        <td width="14%">Пт</td>
-        <td width="14%">Сб</td>
-        <td width="14%">Вс</td>
-    </tr>
-    <tr>
+    <tbody>
+        <tr class="info">
+            <td width="14%">Пн</td>
+            <td width="14%">Вт</td>
+            <td width="14%">Ср</td>
+            <td width="14%">Чт</td>
+            <td width="14%">Пт</td>
+            <td width="14%">Сб</td>
+            <td width="14%">Вс</td>
+        </tr>
+        <tr>
 {{ section name=numloop loop=$calendar.days }}
-        <td class="{{ if !$calendar.days[numloop] }}s20{{ else }}s2{{ if $calendar.days[numloop].selected }}1{{ /if }}{{ /if }}{{ if $calendar.days[numloop].today }} today{{ /if }}">
+            <td class="{{ if !$calendar.days[numloop] }}s20{{ else }}s2{{ if $calendar.days[numloop].selected }}1{{ /if }}{{ /if }}{{ if $calendar.days[numloop].today }} today{{ /if }}">
     {{ if $calendar.days[numloop].selected }}
-            <a href="/{{ $calendar.thisMonth }}{{ $calendar.days[numloop].link }}/">{{ $calendar.days[numloop].number }}</a>
+                <a href="/{{ $calendar.thisMonth }}{{ $calendar.days[numloop].link }}/">{{ $calendar.days[numloop].number }}</a>
     {{ else }}
             {{ $calendar.days[numloop].number|default:"&nbsp;" }}
     {{ /if }}
-        </td>
-
+            </td>
     {{* see if we should go to the next row *}}
     {{ if not ($smarty.section.numloop.rownum mod 7) }}
         {{ if not $smarty.section.numloop.last }}
-    </tr>
-    <tr>
+        </tr>
+        <tr>
         {{ /if }}
     {{ /if }}
 
@@ -46,10 +46,11 @@
         {{ math equation = "n - a % n" n=7 a=$calendar.days|@count assign="cells" }}
         {{ if $cells ne 7 }}
             {{ section name=pad loop=$cells }}
-        <td class="s20">&nbsp;</td>
+            <td class="s20">&nbsp;</td>
             {{ /section }}
         {{ /if }}
-    </tr>
+        </tr>
     {{ /if }}
 {{ /section }}
+    </tbody>
 </table>

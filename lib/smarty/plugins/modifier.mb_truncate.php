@@ -1,5 +1,6 @@
 <?php
 /**
+ * Update! UTF-8 patch
  * Smarty plugin
  * @package Smarty
  * @subpackage plugins

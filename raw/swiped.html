@@ -1,0 +1,47 @@
+{{ if $data.photoalbum________ }}
+  $('.lead').prepend('<div id="swiper-thumb" class="swiper-container"><div class="swiper-wrapper"></div></div><div id="swiper-img" class="swiper-container"><div class="swiper-wrapper"></div></div><div id="swiper-caption"></div><div id="swiper-pagination"></div>');
+  var userid = '111720744204085188373', albumid = '5714486801380640769';//{{ $data.photoalbum }}';
+  var picasaAPI = 'https://picasaweb.google.com/data/feed/api/user/' + userid + '/albumid/' + albumid + '?callback=?';
+
+  $.getJSON(picasaAPI, {
+    'kind': 'photo',
+    'access': 'public',
+    'max-results': 50,
+    'thumbsize': '72c,640u',
+    'alt': 'json-in-script'
+  })
+  .done(function(data) {
+    var mySwiper = $('#swiper-img').swiper({
+      pagination: '#swiper-pagination'
+      //autoPlay: 5000,
+      //onSlideChangeEnd: function(e) { showCaption(e.activeSlide) },
+      //speed: 300
+    });
+    var mySwiperThumb = $('#swiper-thumb').swiper({
+      freeMode: true,
+      freeModeFluid: true,
+      slidesPerSlide: 8
+      //speed: 0
+    });
+    var showCaption = function(slide) {
+      $('#swiper-caption').text(caption[slide]);
+      mySwiperThumb.swipeTo(slide);
+      $('#swiper-thumb .active').removeClass('active');
+      $('#swiper-thumb .swiper-slide').eq(slide).addClass('active');
+
+    };
+    var caption = [];
+    $.each(data.feed.entry, function(i, item) {
+      mySwiperThumb.appendSlide('<img src="' + item.media$group.media$thumbnail[0].url + '" alt="">');
+
+      mySwiper.appendSlide('<figure><img src="' + item.media$group.media$thumbnail[1].url + '" alt="' + item.media$group.media$description.$t + '"><figcaption>caption ' + i + '</figcaption></figure>');
+      caption[i] = item.media$group.media$description.$t;
+    });
+    $('#swiper-pagination .swiper-pagination-switch').click(function() {
+      mySwiper.swipeTo($(this).index());
+      mySwiperThumb.swipeTo($(this).index());
+      mySwiper.stopAutoPlay();
+    });
+    showCaption(0);
+  });
+{{ /if }}

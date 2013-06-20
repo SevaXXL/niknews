@@ -46,44 +46,51 @@ Options +FollowSymLinks
 RewriteEngine on
 
 ## skip root page
-RewriteRule ^skip/([0-9]{1,15})/?$ index.php?skip=$1&data=______rootpage/skip/$1/ [NC,L]
+#RewriteRule ^skip/([0-9]{1,15})/?$ index.php?skip=$1&data=______rootpage/skip/$1/ [L]
 
 ## search
 RewriteRule ^search/?$ index.php?action=search&data=search/ [QSA,L]
 
 ## add entry
-RewriteRule ^add/?$ index.php?action=add&data=add/ [NC,L]
+RewriteRule ^add/?$ index.php?action=add&data=add/ [L]
 
 ## rss
-RewriteRule ^rss/?$ rss/entry.xml [NC,L]
+#RewriteRule ^rss/?$ rss/entry.xml [L]
 
 ## exceptions
-RewriteRule ^login/?$ index.php?action=login&data=login/ [NC,L]
-RewriteRule ^logout/?$ index.php?action=logout&data=logout/ [NC,L]
-RewriteRule ^clearcache/?$ index.php?action=clearc&data=clearcache/ [NC,L]
+RewriteRule ^login/?$ index.php?action=login&data=login/ [L]
+RewriteRule ^logout/?$ index.php?action=logout&data=logout/ [L]
+RewriteRule ^clearcache/?$ index.php?action=clearc&data=clearcache/ [L]
 
 ## dates 
-RewriteRule ^([0-9]{4,4})/?$ index.php?year=$1&action=date&part=year&data=$1/ [NC,L]
-RewriteRule ^([0-9]{4,4})/([0-9]{2,2})/?$ index.php?year=$1&month=$2&action=date&part=month&data=$1/$2/ [NC,L]
-RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/?$ index.php?year=$1&month=$2&day=$3&action=date&part=day&data=$1/$2/$3/ [NC,L]
+RewriteRule ^([0-9]{4,4})/?$ index.php?year=$1&action=date&part=year&data=$1/ [L]
+RewriteRule ^([0-9]{4,4})/([0-9]{2,2})/?$ index.php?year=$1&month=$2&action=date&part=month&data=$1/$2/ [L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/?$ index.php?year=$1&month=$2&day=$3&action=date&part=day&data=$1/$2/$3/ [L]
 
 ## separate entries with urlcache
-RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/?$ index.php?year=$1&month=$2&day=$3&action=entry&part=day&data=$1/$2/$3/$4/&getid=true&urlcache=$4 [NC,L]
-RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/edit/?$ index.php?year=$1&month=$2&day=$3&action=edit&data=$1/$2/$3/$4/edit/&getid=true&urlcache=$4&table=update [NC,L]
-RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/delete/?$ index.php?year=$1&month=$2&day=$3&action=delete&data=$1/$2/$3/$4/delete/&getid=true&urlcache=$4 [NC,L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-z0-9]+)/?$ index.php?year=$1&month=$2&day=$3&action=entry&part=day&data=$1/$2/$3/$4/&getid=true&urlcache=$4 [L]
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-z0-9]+)/edit/?$ index.php?year=$1&month=$2&day=$3&action=edit&data=$1/$2/$3/$4/edit/&getid=true&urlcache=$4&table=update [L]
+#RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-zA-Z0-9_]+)/delete/?$ index.php?year=$1&month=$2&day=$3&action=delete&data=$1/$2/$3/$4/delete/&getid=true&urlcache=$4 [L]
 
 ## keywords
-RewriteRule ^keyword/([-a-zA-Z0-9_]+)?/?$ index.php?keyword=$1&action=keyword&data=keyword/$1/ [NC,L]
-RewriteRule ^keyword2/([-a-zA-Z0-9_]+)?/?$ index.php?keyword2=$1&action=keyword2&data=keyword2/$1/ [NC,L]
+RewriteRule ^keyword/?$ index.php?action=keyword&data=keyword/ [L]
+RewriteRule ^keyword/([-a-z0-9]+)/?$ index.php?keyword=$1&action=keyword&data=keyword/$1/ [L]
 
+## thumbnail
+## QSA для возможных параметров???
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^files/part([0-9]+)/([0-9]+)-([0-9]+)x([0-9]+).(jpg|gif|png)$ index.php?action=thumb&image=$2&ext=$5&width=$3&height=$4 [QSA,L]
 
-## files
-#RewriteRule ^entry/([0-9]{1,15})/file/(.*)\.([-a-zA-Z0-9_]{1,4})$ files/$1/$2.$3 [NC,L]
-
-## sections
-#RewriteRule ^([-a-zA-Z0-9_]+)/?$ index.php?data=$1&section=$1&action=section [NC,L]
-RewriteRule ^([-a-zA-Z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&section=$1&action=section&skip=$2 [NC,L]
+# add photo
+RewriteRule ^([0-9]{4,4})/([0-9]{1,2})/([0-9]{1,2})/([-a-z0-9]+)/photo/?$ index.php?year=$1&month=$2&day=$3&action=photo&data=$1/$2/$3/$4/photo/&getid=true&urlcache=$4 [L]
+RewriteRule ^upload/?$ index.php?action=photo&data=upload/ [QSA,L]
 
 ## authors
-RewriteRule ^author/([-a-zA-Z0-9_]+)/?$ index.php?data=$1&author=$1&action=author [NC,L]
-RewriteRule ^author/([-a-zA-Z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&author=$1&action=author&skip=$2 [NC,L]
+RewriteRule ^author/?$ index.php?data=author/&action=author [L]
+RewriteRule ^author/([-a-z0-9]+)/?$ index.php?data=author/$1/&author=$1&action=author [L]
+##RewriteRule ^author/([-a-z0-9]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&author=$1&action=author&skip=$2 [L]
+
+## section
+RewriteRule ^([-a-z0-9_]+)/?$ index.php?data=$1/&section=$1&action=section [L]
+RewriteRule ^([-a-z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&section=$1&action=section&skip=$2 [L]
+
