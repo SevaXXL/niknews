@@ -16,12 +16,7 @@
   </div>
 
 <div class="page-header">
-<!--   <a href="#" class="share-vkontakte"></a>
-  <a href="#" class="share-facebook"></a>
-  <a href="#" class="share-odnoklassniki"></a>
-  <a href="#" class="share-twitter"></a>
-  <a href="#" class="share-email"></a>
- -->
+
   <div class="share42init pull-right" data-path="/templates/public/img/"></div>
 
   <div class="btn-group pull-right">

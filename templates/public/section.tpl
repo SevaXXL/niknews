@@ -25,7 +25,7 @@
 {{ foreach from=$data item=entry }}
         <h4><a href="{{ $entry.url }}">{{ $entry.title }}</a></h4>
     {{ if $entry.image }}
-        <img src="/files/part{{ $entry.imagepart }}/{{ $entry.image }}-100x100.{{ $entry.ext }}" class="pull-left" style="margin-right: 1em;">
+        <div class="thumb" style="background-image: url(/files/part{{ $entry.imagepart }}/{{ $entry.image }}-150x150.{{ $entry.ext }});"></div>
     {{ /if }}
         <p>{{ $entry.lead|strip_tags:false }}</p>
         <div class="biser clearfix">

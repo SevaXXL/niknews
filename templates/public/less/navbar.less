@@ -8,10 +8,9 @@
 
 // Base class and wrapper
 .navbar {
+  text-transform: uppercase;
   overflow: visible;
   margin-bottom: @baseLineHeight;
-  font-weight: 300;
-
 
   // Fix for IE7's bad z-indexing so dropdowns don't appear below content that follows the navbar
   *position: relative;
@@ -21,15 +20,13 @@
 // Inner for background effects
 // Gradient is applied to its own element because overflow visible is not honored by IE when filter is present
 .navbar-inner {
-  text-transform: uppercase;
-  font-size: 14px;
   min-height: @navbarHeight;
-  padding-left:  0;//20px;
-  padding-right: 0;//20px;
-  // #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
-  // border: 1px solid @navbarBorder;
-  // .border-radius(@baseBorderRadius);
-  // .box-shadow(0 1px 4px rgba(0,0,0,.065));
+  padding-left:  20px;
+  padding-right: 20px;
+  #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
+  border: 1px solid @navbarBorder;
+  .border-radius(@baseBorderRadius);
+  .box-shadow(0 1px 4px rgba(0,0,0,.065));
 
   // Prevent floats from breaking the navbar
   .clearfix();
@@ -39,7 +36,6 @@
 // We then reset it for fixed navbars in the #gridSystem mixin
 .navbar .container {
   width: auto;
-
 }
 
 // Override the default collapsed state
@@ -89,7 +85,7 @@
 // -------------------------
 .navbar .divider-vertical {
   height: @navbarHeight;
-  margin: 0;//0 9px;
+  margin: 0 9px;
   border-left: 1px solid @navbarBackground;
   border-right: 1px solid @navbarBackgroundHighlight;
 }

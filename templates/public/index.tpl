@@ -8,17 +8,17 @@
 
     <title>{{ $title|escape:'UTF-8'|default:"Николаевские новости" }}</title>
 
-    <link rel="stylesheet" href="/templates/public/css/bootstrap.css">
-    <!-- <link rel="stylesheet/less" href="/templates/public/less/bootstrap.less?ver=10" media="screen"> -->
+    <!-- <link rel="stylesheet" href="/templates/public/css/bootstrap.css"> -->
+    <link rel="stylesheet/less" href="/templates/public/less/bootstrap.less?ver=10" media="screen">
 
     <!-- <link rel="stylesheet/less" href="/templates/public/less/responsive.less" media="screen"> -->
     <link rel="stylesheet" href="/templates/public/css/bootstrap-responsive.min.css">
 
     <link rel="stylesheet" href="http://fotorama.s3.amazonaws.com/4.1.5/fotorama.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab:700&amp;subset=cyrillic,latin">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:700&amp;subset=cyrillic">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,800,400,700&amp;subset=latin,cyrillic">
 
-    <!-- <script src="/templates/public/js/less-1.3.3.min.js"></script> -->
+    <script src="/templates/public/js/less-1.3.3.min.js"></script>
 
     <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.1.1.js"></script>
@@ -51,18 +51,21 @@
       <div class="wrapper"><!-- Пустой стиль -->
 
         <div id="header">
-          <form action="/search/" class="pull-right">
-            <input type="search" placeholder="Поиск" name="q" x-webkit-speech>
-          </form>
             <h1><a href="/">Николаевские новости</a></h1>
         </div><!-- #header -->
 
-        <div class="navbar navbar-inverse">
+        <div class="navbar">
           <div class="navbar-inner">
             <ul class="nav menu">
               <li><a href="/">Главная</a></li>
               <li class="divider-vertical"></li>
+              <li>
+                <a href="#">Рубрики <span class="down">&#9662;</span></a>
+                {{* Все рубрики в два уровня *}}{{ rubrika }}
+              </li>
+              <li class="divider-vertical"></li>
               <li><a href="/author/">Авторы</a></li>
+              <li class="divider-vertical"></li>
               <li><a href="/{{ $smarty.now|date_format:"%Y" }}/">Архив</a></li>
               <li class="divider-vertical"></li>
               <li><a href="#">Разделы <span class="down">&#9662;</span></a>
@@ -80,22 +83,16 @@
                   <li><a href="#">Украина</a></li>
                 </ul>
               </li>
-              <li class="divider-vertical"></li>
-
-              <li>
-                <a href="#">Рубрики <span class="down">&#9662;</span></a>
-                {{* Все рубрики в два уровня *}}{{ rubrika }}
-              </li>
             </ul>
+            <div class="pull-right">
+              <a href="#" class="share-vkontakte"></a>
+              <a href="#" class="share-facebook"></a>
+              <a href="#" class="share-odnoklassniki"></a>
+              <a href="#" class="share-twitter"></a>
+              <a href="#" class="share-email"></a>
+            </div>
           </div>
         </div>
-
-<div class="row">
-    <div class="span3">3</div>
-    <div class="span6">6</div>
-    <div class="span3">3</div>
-</div>
-
 
         {{ include file=$template }}
 
