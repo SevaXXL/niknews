@@ -14,9 +14,15 @@
     <!-- <link rel="stylesheet/less" href="/templates/public/less/responsive.less" media="screen"> -->
     <link rel="stylesheet" href="/templates/public/css/bootstrap-responsive.min.css">
 
-    <link rel="stylesheet" href="http://fotorama.s3.amazonaws.com/4.1.5/fotorama.css">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:700&amp;subset=cyrillic">
+    <!-- <link rel="stylesheet" href="http://fotorama.s3.amazonaws.com/4.1.5/fotorama.css"> -->
+    <link rel="stylesheet" href="/templates/public/css/idangerous.swiper.css">
+    <link rel="stylesheet" href="/templates/public/css/idangerous.swiper.scrollbar.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,800,400,700&amp;subset=latin,cyrillic">
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
 
     <script src="/templates/public/js/less-1.3.3.min.js"></script>
 
@@ -47,52 +53,36 @@
   {{ /if }}
 {{ /dynamic }}
 
-    <div class="container -fluid">
-      <div class="wrapper"><!-- Пустой стиль -->
 
-        <div id="header">
-            <h1><a href="/">Николаевские новости</a></h1>
-        </div><!-- #header -->
-
-        <div class="navbar">
+        <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
-            <ul class="nav menu">
-              <li><a href="/">Главная</a></li>
-              <li class="divider-vertical"></li>
-              <li>
-                <a href="#">Рубрики <span class="down">&#9662;</span></a>
-                {{* Все рубрики в два уровня *}}{{ rubrika }}
-              </li>
-              <li class="divider-vertical"></li>
-              <li><a href="/author/">Авторы</a></li>
-              <li class="divider-vertical"></li>
-              <li><a href="/{{ $smarty.now|date_format:"%Y" }}/">Архив</a></li>
-              <li class="divider-vertical"></li>
-              <li><a href="#">Разделы <span class="down">&#9662;</span></a>
-                <ul>
-                  <li><a href="#">Новости</a></li>
-                  <li><a href="#">Сообщения</a></li>
-                  <li><a href="#">Пресс-релиз</a></li>
-                </ul>
-              </li>
-              <li class="divider-vertical"></li>
-              <li><a href="#">Регион <span class="down">&#9662;</span></a>
-                <ul>
-                  <li><a href="#">Николаев</a></li>
-                  <li><a href="#">Николаевская область</a></li>
-                  <li><a href="#">Украина</a></li>
-                </ul>
-              </li>
-            </ul>
-            <div class="pull-right">
-              <a href="#" class="share-vkontakte"></a>
-              <a href="#" class="share-facebook"></a>
-              <a href="#" class="share-odnoklassniki"></a>
-              <a href="#" class="share-twitter"></a>
-              <a href="#" class="share-email"></a>
+            <div class="container">
+
+              <form action="/search/" class="navbar-search pull-right">
+                <input type="search" placeholder="Поиск" name="q" class="search-query" x-webkit-speech>
+              </form>
+              <a class="brand" href="#">Николаевские новости</a>
+              <ul class="nav menu">
+                <li>
+                  <a href="#">Рубрики <span class="down">&#9662;</span></a>
+                  {{* Все рубрики в два уровня *}}{{ rubrika }}
+                </li>
+                <li class="divider-vertical"></li>
+                <li><a href="#">Регион <span class="down">&#9662;</span></a>
+                  <ul>
+                    <li><a href="#">Николаев</a></li>
+                    <li><a href="#">Николаевская область</a></li>
+                    <li><a href="#">Украина</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+
+    <div class="container">
+      <div class="wrapper"><!-- Пустой стиль -->
+
 
         {{ include file=$template }}
 
@@ -116,22 +106,24 @@
     </div><!-- /.container -->
 
     <script src="/templates/public/js/bootstrap-dropdown.js"></script>
-    <script src="/templates/public/js/jquery.scrollUp.min.js"></script>
+    <!-- // <script src="/templates/public/js/jquery.scrollUp.min.js"></script> -->
     <script src="/templates/public/js/jquery.timeago.js"></script>
     <script src="/templates/public/js/jquery.timeago.ru.js"></script>
     <script src="/templates/public/js/share42.js"></script>
     <script src="/templates/public/js/bootstrap-tooltip.js"></script>
     <script src="/templates/public/js/jquery.storage.js"></script>
-    <script src="http://fotorama.s3.amazonaws.com/4.1.5/fotorama.js"></script>
+    <!-- // <script src="http://fotorama.s3.amazonaws.com/4.1.5/fotorama.js"></script> -->
+    <script defer src="/templates/public/js/idangerous.swiper-2.0.min.js"></script>
+    <script defer src="/templates/public/js/idangerous.swiper.scrollbar-2.0.js"></script>
 
     <script>
       $(document).ready(function () {
 
         // Панель прокрутки вверх
-        $.scrollUp({
-          animation: 'none',
-          scrollImg: true
-        });
+        // $.scrollUp({
+        //   animation: 'none',
+        //   scrollImg: true
+        // });
 
         // Предупреждение при копировании
         $(document).bind('copy', function(e) {
@@ -142,6 +134,11 @@
         $('input[type="search"]').bind('webkitspeechchange', function() {
           $(this).parent('form').submit();
         });
+
+
+
+
+
 
       });
     </script>

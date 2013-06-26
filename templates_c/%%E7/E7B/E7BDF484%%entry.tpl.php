@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-20 21:44:17
+<?php /* Smarty version 2.6.27, created on 2013-06-24 21:46:31
          compiled from entry.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'date_format', 'entry.tpl', 37, false),array('modifier', 'month', 'entry.tpl', 37, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'date_format', 'entry.tpl', 32, false),array('modifier', 'month', 'entry.tpl', 32, false),)), $this); ?>
 
 <?php if ($this->_tpl_vars['data']['rubrika']): ?>
   <ul class="breadcrumb">
@@ -27,12 +27,7 @@ if ($this->_foreach['thisforeach']['total'] > 0):
   </div>
 
 <div class="page-header">
-<!--   <a href="#" class="share-vkontakte"></a>
-  <a href="#" class="share-facebook"></a>
-  <a href="#" class="share-odnoklassniki"></a>
-  <a href="#" class="share-twitter"></a>
-  <a href="#" class="share-email"></a>
- -->
+
   <div class="share42init pull-right" data-path="/templates/public/img/"></div>
 
   <div class="btn-group pull-right">

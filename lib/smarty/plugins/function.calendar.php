@@ -1,6 +1,7 @@
 <?
 function smarty_function_calendar($params, &$smarty)
 {
+
     global  $db, $cacheID;
 
     //year
@@ -29,11 +30,11 @@ function smarty_function_calendar($params, &$smarty)
         $day = null;
 
         //the current day must be marked, go on, find it =)
-        $thisMonth = date("m", NOW);
-        $thisYear = date("Y", NOW);
+        $thisMonth = date("m", time());
+        $thisYear = date("Y", time());
 
         if ($month == $thisMonth and $year == $thisYear) {
-            $day = date("d", NOW);
+            $day = date("d", time());
         }
     }
 

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-20 22:00:14
+<?php /* Smarty version 2.6.27, created on 2013-06-25 11:18:57
          compiled from rubrika.tpl */ ?>
 <ul>
 <?php $_from = $this->_tpl_vars['nav_rubrika']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):

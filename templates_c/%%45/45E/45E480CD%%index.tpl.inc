@@ -1,12 +1,12 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-20 22:00:14
+<?php /* Smarty version 2.6.27, created on 2013-06-25 11:18:57
          compiled from index.tpl */
 
-$this->_cache_serials['templates_c/%%45/45E/45E480CD%%index.tpl.inc'] = 'e9cf6885fcee9aed0499df8c553eb616';
+$this->_cache_serials['templates_c/%%45/45E/45E480CD%%index.tpl.inc'] = 'c35b02d7dcf3a5b9a7ff4b49d910af09';
 
 ?><?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', 'index.tpl', 6, false),array('modifier', 'escape', 'index.tpl', 6, false),array('modifier', 'default', 'index.tpl', 9, false),array('modifier', 'date_format', 'index.tpl', 66, false),array('block', 'dynamic', 'index.tpl', 33, false),array('function', 'rubrika', 'index.tpl', 87, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', 'index.tpl', 6, false),array('modifier', 'escape', 'index.tpl', 6, false),array('modifier', 'default', 'index.tpl', 9, false),array('modifier', 'date_format', 'index.tpl', 90, false),array('block', 'dynamic', 'index.tpl', 39, false),array('function', 'rubrika', 'index.tpl', 68, false),)), $this); ?>
 <?php
-function _smarty_tplfunc_e9cf6885fcee9aed0499df8c553eb616_0(&$_smarty)
+function _smarty_tplfunc_c35b02d7dcf3a5b9a7ff4b49d910af09_0(&$_smarty)
 {
 $_smarty->_tag_stack[] = array('dynamic', array()); $_block_repeat=true;smarty_block_dynamic($_smarty->_tag_stack[count($_smarty->_tag_stack)-1][1], null, $_smarty, $_block_repeat);while ($_block_repeat) { ob_start(); ?>
     <!-- Static: <?php if ($_smarty->_tpl_vars['CACHE']): ?>Yes<?php else: ?>No<?php endif; ?> | Time: <?php echo $_smarty->_tpl_vars['TIME']; ?>

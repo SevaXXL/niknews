@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-20 21:30:28
+<?php /* Smarty version 2.6.27, created on 2013-06-22 01:30:37
          compiled from section.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', 'section.tpl', 30, false),array('modifier', 'date_format', 'section.tpl', 32, false),array('modifier', 'month', 'section.tpl', 32, false),)), $this); ?>
@@ -44,10 +44,10 @@ unset($_smarty_tpl_vars);
 "><?php echo $this->_tpl_vars['entry']['title']; ?>
 </a></h4>
     <?php if ($this->_tpl_vars['entry']['image']): ?>
-        <img src="/files/part<?php echo $this->_tpl_vars['entry']['imagepart']; ?>
+        <div class="thumb" style="background-image: url(/files/part<?php echo $this->_tpl_vars['entry']['imagepart']; ?>
 /<?php echo $this->_tpl_vars['entry']['image']; ?>
--100x100.<?php echo $this->_tpl_vars['entry']['ext']; ?>
-" class="pull-left" style="margin-right: 1em;">
+-150x150.<?php echo $this->_tpl_vars['entry']['ext']; ?>
+);"></div>
     <?php endif; ?>
         <p><?php echo ((is_array($_tmp=$this->_tpl_vars['entry']['lead'])) ? $this->_run_mod_handler('strip_tags', true, $_tmp, false) : smarty_modifier_strip_tags($_tmp, false)); ?>
 </p>

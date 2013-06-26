@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-05-29 23:18:52
+<?php /* Smarty version 2.6.27, created on 2013-06-20 22:30:47
          compiled from login.tpl */ ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -14,17 +14,13 @@
         margin-top: 2em;
       }
     </style>
-    <script src="http://code.jquery.com/jquery.min.js"></script>   
-    <script src="/templates/public/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="span4 offset4 well">
           <legend>Вход на сайт</legend>
-          <div class="alert alert-error">
-            <a class="close" data-dismiss="alert" href="#">&times;</a>Неверный логин или пароль!
-          </div>
+          <div id="error" class="alert alert-error hide">Неверный логин или пароль!</div>
           <form method="post" action="/login/">
             <input type="text" id="username" class="input-block-level" name="username" placeholder="Логин" required autocomplete="off">
             <input type="password" id="password" class="input-block-level" name="password" placeholder="Пароль" required autocomplete="off">
@@ -37,11 +33,9 @@
       </div>
     </div>
     <script>
-      $(function() {
-        if (location.hash != '#error') {
-          $('.alert').alert('close');
-        }
-      });
+      if (location.hash == '#error') {
+        document.getElementById('error').style.display = 'block';
+      }
     </script>
   </body>
 </html>
