@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-22 01:30:37
+<?php /* Smarty version 2.6.27, created on 2013-06-28 17:58:40
          compiled from section.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', 'section.tpl', 30, false),array('modifier', 'date_format', 'section.tpl', 32, false),array('modifier', 'month', 'section.tpl', 32, false),)), $this); ?>

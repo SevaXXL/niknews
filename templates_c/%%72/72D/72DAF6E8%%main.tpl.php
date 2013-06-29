@@ -1,7 +1,102 @@
-<?php /* Smarty version 2.6.27, created on 2013-06-25 11:18:57
+<?php /* Smarty version 2.6.27, created on 2013-06-29 03:30:21
          compiled from main.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'strip_tags', 'main.tpl', 10, false),array('modifier', 'mb_truncate', 'main.tpl', 10, false),array('modifier', 'date_format', 'main.tpl', 19, false),array('function', 'rubrika', 'main.tpl', 29, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'date_format', 'main.tpl', 10, false),array('modifier', 'strip_tags', 'main.tpl', 89, false),array('modifier', 'mb_truncate', 'main.tpl', 89, false),array('function', 'rubrika', 'main.tpl', 108, false),)), $this); ?>
+
+  <div class="col-main">
+    <div class="col-main-left">
+      <form action="/search/">
+          <input type="search" placeholder="Поиск" name="q" class="" x-webkit-speech>
+      </form>
+      <div class="gradient">
+  <?php $_from = $this->_tpl_vars['newsline']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['entry']):
+?>
+      <div><?php echo ((is_array($_tmp=$this->_tpl_vars['entry']['intime'])) ? $this->_run_mod_handler('date_format', true, $_tmp, '%R') : smarty_modifier_date_format($_tmp, '%R')); ?>
+</div>
+      <p><a href="<?php echo $this->_tpl_vars['entry']['url']; ?>
+/"><?php echo $this->_tpl_vars['entry']['title']; ?>
+</a></p>
+  <?php endforeach; endif; unset($_from); ?>
+      </div>
+    </div>
+    <div class="col-main-center">
+      <div class="adv-main">
+        <img src="http://placehold.it/468x60">
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Бейсбол в Америке. Гринжакетс (Огаста) - Реведокс (Чарльстон)
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Футбол. Украина - Камерун - 0:0. Товарищесткий матч
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Ливень в Николаеве
+      </div>
+      <div class="photo-last">
+        <img src="http://placehold.it/102x60">
+        Суперлига «Будевельник» - «Азовмаш» - 89:75
+      </div>
+      <div class="clearfix"></div>
+      <div class="header-text"><a href="#">Все галереи</a></div>
+      <div class="gradient-line"></div>
+      <div class="header-line">Сегодня в Украине</div>
+      <div class="gradient-line"></div>
+
+        <div class="item-block">
+          <div class="top-photo">
+            <img src="http://placehold.it/180x120">
+            <p>«Покращення» продолжается: промышленность упала почти на 10%</p>
+          </div>
+          <div class="">
+            <p><a href="#">Сотрудники уголовного розыска Корабельного райотдела милиции задержали грабителей, которые в конце мая обчистили ювелирный магазин «Сапфир»</a></p>
+            <p><a href="#">Николаевец Роман Замбалюк стал главным ревизором в</a></p>
+          </div>
+        </div>
+    </div>
+  <div class="clearfix"></div>
+  <div class="line"></div>
+  <div class="header-text"><a href="#">Все галереи</a></div>
+<?php $_from = $this->_tpl_vars['kriminal']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['entry']):
+?>
+  <p><a href="<?php echo ((is_array($_tmp=$this->_tpl_vars['entry']['intime'])) ? $this->_run_mod_handler('date_format', true, $_tmp, '/%Y/%m/%d/') : smarty_modifier_date_format($_tmp, '/%Y/%m/%d/')); ?>
+<?php echo $this->_tpl_vars['entry']['urlcache']; ?>
+/"><?php echo $this->_tpl_vars['entry']['title']; ?>
+</a></p>
+<?php endforeach; endif; unset($_from); ?>
+  </div>
+  <div class="col-right">
+    <div class="gradient-line"></div>
+    <div class="sport-live">Спорт-live</div>
+    <div class="gradient-line"></div>
+    <img src="/templates/public/img/table.png" style="margin: 1em 0;">
+    <div class="gradient-line"></div>
+    <div class="header-line">Спорт</div>
+    <div class="gradient-line"></div>
+  <?php $_from = $this->_tpl_vars['sport']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+    foreach ($_from as $this->_tpl_vars['entry']):
+?>
+      <div class="time-area"><?php echo ((is_array($_tmp=$this->_tpl_vars['entry']['intime'])) ? $this->_run_mod_handler('date_format', true, $_tmp, '%R') : smarty_modifier_date_format($_tmp, '%R')); ?>
+</div>
+      <div class="head-area"><a href="<?php echo ((is_array($_tmp=$this->_tpl_vars['entry']['intime'])) ? $this->_run_mod_handler('date_format', true, $_tmp, '/%Y/%m/%d/') : smarty_modifier_date_format($_tmp, '/%Y/%m/%d/')); ?>
+<?php echo $this->_tpl_vars['entry']['urlcache']; ?>
+/"><?php echo $this->_tpl_vars['entry']['title']; ?>
+</a></div>
+  <?php endforeach; endif; unset($_from); ?>
+  </div>
+  <div class="clearfix"></div>
+  test
+
+
+
+
+
+
+
 <div class="clearfix">
     <div class="col-large">
       <div class="col-main">
