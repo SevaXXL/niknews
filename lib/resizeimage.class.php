@@ -122,7 +122,9 @@ class ResizeImage
                         $this->resizeHeight = $height;
                     }
                 } else {
-                    $this->resizeWidth = $width;
+                    // $this->resizeWidth = $width;
+                    // $this->resizeHeight = $height;
+                    $this->resizeWidth  = $this->resizeWidthByHeight($height);
                     $this->resizeHeight = $height;
                 }
             break;

@@ -1,65 +1,85 @@
 {{* Smarty *}}
-<div class="clearfix">
-    <div class="col-large">
-      <div class="col-main">
+
+  <div class="col-main">
+    <div class="col-main-left">
+      <form action="/search/">
+          <input type="search" placeholder="Поиск" name="q" class="" x-webkit-speech>
+      </form>
+      <div class="gradient">
   {{ foreach from=$newsline item=entry }}
-      {{ if $entry.image }}
-          <div class="thumb" style="width: 100px; height: 100px; background-image: url(/files/part{{ $entry.imagepart }}/{{ $entry.image }}-150x150.{{ $entry.ext }});"></div>
-      {{ /if }}
-      <h4><a href="{{ $entry.url }}">{{ $entry.title }}</a></h4>
-      <p>{{ $entry.lead|strip_tags:false|mb_truncate:300  }}</p>
-      <ul class="breadcrumb clearfix">
- 
-    {{ if $entry.rubrika }}
-      {{ foreach from=$entry.rubrika item=value name=thisforeach }}
-        <li><a href="{{ $value.link }}">{{ $value.word }}</a>{{ if not $smarty.foreach.thisforeach.last }}<span class="divider"> &gt; </span>{{ /if }}</li>
-      {{ /foreach }}
-      <li><span class="divider"> | </span></li>
-    {{ /if }}
-        <li><span class="timeago" title="{{ $entry.intime|date_format:'%Y-%m-%dT%T' }}">&nbsp;</span></li>
-      </ul>
-      <hr>
+      <div>{{ $entry.intime|date_format:'%R' }}</div>
+      <p><a href="{{ $entry.url }}/">{{ $entry.title }}</a></p>
   {{ /foreach }}
-
-
-      <div class="fotorama">foto</div>
-
-
+      </div>
     </div>
-    {{ rubrika }}
-  </div>
+    <div class="col-main-center">
+      <div class="adv-main">
+        <img src="http://placehold.it/468x60">
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Бейсбол в Америке. Гринжакетс (Огаста) - Реведокс (Чарльстон)
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Футбол. Украина - Камерун - 0:0. Товарищесткий матч
+      </div>
+      <div class="photo">
+        <img src="http://placehold.it/102x60">
+        Ливень в Николаеве
+      </div>
+      <div class="photo-last">
+        <img src="http://placehold.it/102x60">
+        Суперлига «Будевельник» - «Азовмаш» - 89:75
+      </div>
+      <div class="clearfix"></div>
+      <div class="header-text"><a href="#">Все галереи</a></div>
+      <div class="gradient-line"></div>
+      <div class="header-line">Сегодня в Украине</div>
+      <div class="gradient-line"></div>
 
-    <div class="col-newsline">
-      <div class="text-center"><div class="adv"><img src="http://placehold.it/300x250"></div></div>
-      <h4>Лента новостей</h4>
-      <ul class="item">
-{{ foreach from=$newsline item=entry }}
-        <li>
-          <a href="{{ $entry.url }}">
-            {{ if $entry.videofull }}
-            <div id="{{ $entry.video }}" class="thumb-video"><img src="/templates/public/img/button-play.png" alt="Видео"></div>
-            <script>
-            $(document).ready(function () {
-              $.getJSON('http://gdata.youtube.com/feeds/api/videos/{{ $entry.video }}?callback=?', {
-                'alt': 'json-in-script'
-              }).done(function(data){
-                $('#{{ $entry.video }}').css('background-image', 'url(' + data.entry.media$group.media$thumbnail[0].url + ')');
-              });
-            });
-            </script>
-            {{ elseif $entry.image }}<div class="thumb" style="width: 60px; height: 60px; background-image: url(/files/part{{ $entry.imagepart }}/{{ $entry.image }}-150x150.{{ $entry.ext }});"></div>{{ /if }}
-            <div>
-              <span class="timeago" title="{{ $entry.intime|date_format:'%Y-%m-%dT%T' }}">&nbsp;</span>
-              {{ if $entry.rubrika }}<span class="divider">|</span><em>{{ $entry.rubrika[0].word }}</em>{{ /if }}
-            </div>
-              {{ $entry.title }}
-          </a>
-        </li>
+        <div class="item-block">
+          <div class="top-photo">
+            <img src="http://placehold.it/180x120">
+            <p>«Покращення» продолжается: промышленность упала почти на 10%</p>
+          </div>
+          <div class="">
+            <p><a href="#">Сотрудники уголовного розыска Корабельного райотдела милиции задержали грабителей, которые в конце мая обчистили ювелирный магазин «Сапфир»</a></p>
+            <p><a href="#">Николаевец Роман Замбалюк стал главным ревизором в</a></p>
+          </div>
+        </div>
+    </div>
+  <div class="clearfix"></div>
+  <div class="line"></div>
+  <div class="header-text"><a href="#">Все галереи</a></div>
+{{ foreach from=$kriminal item=entry }}
+  <p><a href="{{ $entry.intime|date_format:'/%Y/%m/%d/' }}{{ $entry.urlcache }}/">{{ $entry.title }}</a></p>
 {{ /foreach }}
-      </ul>
-      <h4>* * *</h4>
+  </div>
+  <div class="col-right">
+    <div class="gradient-line"></div>
+    <div class="sport-live">Спорт-live</div>
+    <div class="gradient-line"></div>
+    <img src="/templates/public/img/table.png" style="margin: 1em 0;">
+    <div class="gradient-line"></div>
+    <div class="header-line">Спорт</div>
+    <div class="gradient-line"></div>
+  {{ foreach from=$sport item=entry }}
+      <div class="time-area">{{ $entry.intime|date_format:'%R' }}</div>
+      <div class="head-area"><a href="{{ $entry.intime|date_format:'/%Y/%m/%d/' }}{{ $entry.urlcache }}/">{{ $entry.title }}</a></div>
+  {{ /foreach }}
+  </div>
+  <div class="clearfix"></div>
+  test
 
-    </div>
+
+
+
+
+
+
+<div class="clearfix">
+
 </div>
 
 <script>

@@ -278,7 +278,14 @@ if ($smarty->is_cached($tpl, $cacheID)) {
             }
             exit;
         }
-
+        // new design
+        case 'temp':
+        {
+            $smarty->caching = false;
+            $tpl = 'temp.tpl';
+            include('actions/temp.php');
+            break;
+        }
         default:
         {
             include('actions/rootpage.php');

@@ -44,13 +44,13 @@
 
 // Typography
 // -------------------------
-@sansFontFamily:        "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@sansFontFamily:        "Open Sans_", "Helvetica Neue", Helvetica, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 
-@baseFontSize:          16px;//14px;
+@baseFontSize:          14px;//14px;
 @baseFontFamily:        @sansFontFamily;
-@baseLineHeight:        21px;//20px;
+@baseLineHeight:        18px;//20px;
 @altFontFamily:         @serifFontFamily;
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily//'Roboto Slab';
@@ -180,16 +180,16 @@
 @navbarCollapseWidth:             979px;
 @navbarCollapseDesktopWidth:      @navbarCollapseWidth + 1;
 
-@navbarHeight:                    35px;//40
+@navbarHeight:                    30px;//40
 @navbarBackgroundHighlight:       @grayLighter;
 @navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);
 
-@navbarText:                      #777;
-@navbarLinkColor:                 #777;
+@navbarText:                      #333;//#777;
+@navbarLinkColor:                 #333;//#777;
 @navbarLinkColorHover:            @grayDark;
 @navbarLinkColorActive:           @gray;
-@navbarLinkBackgroundHover:       transparent;
+@navbarLinkBackgroundHover:       darken(@navbarBackground, 5%);//transparent;
 @navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
 
 @navbarBrandColor:                @navbarLinkColor;

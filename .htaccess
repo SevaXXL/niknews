@@ -90,6 +90,9 @@ RewriteRule ^author/?$ index.php?data=author/&action=author [L]
 RewriteRule ^author/([-a-z0-9]+)/?$ index.php?data=author/$1/&author=$1&action=author [L]
 ##RewriteRule ^author/([-a-z0-9]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&author=$1&action=author&skip=$2 [L]
 
+## design
+RewriteRule ^2/?$ index.php?data=2/&action=temp [L]
+
 ## section
 RewriteRule ^([-a-z0-9_]+)/?$ index.php?data=$1/&section=$1&action=section [L]
 RewriteRule ^([-a-z0-9_]+)/skip/([0-9]{1,15})/?$ index.php?data=$1/skip/$2/&section=$1&action=section&skip=$2 [L]
