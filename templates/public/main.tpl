@@ -70,10 +70,7 @@
   {{ /foreach }}
   </div>
   <div class="clearfix"></div>
-  test
-
-
-
+  
 
 
 
